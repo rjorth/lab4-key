@@ -1,7 +1,7 @@
 import sys
-def read_file(string, filename):
-    string = ""
-    filename = ""
+def main():
+    string = sys.argv[0]
+    filename = sys.argv[1]
     open(filename, 'r')
     try:
         for line in filename:
@@ -17,4 +17,4 @@ if __name__=="__main__":
     except ValueError:
         print 'Not enough arguments'
 
-    read_file(string, filename)
+    main()
