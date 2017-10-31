@@ -1,11 +1,8 @@
 from Tkinter import *
 root = Tk()
+root.title('Roman Numerals')
+root.geometry('400x300')
 
-def check_value():
-    if e1.get() == int(e1.get()):
-        to_roman(e1.get())
-    else:
-        from_roman(e1.get())
 
 roman_numeral_map = (('MCM', 1900),
                    ('MD', 1500),
@@ -24,15 +21,18 @@ roman_numeral_map = (('MCM', 1900),
                    ('IV', 4),
                    ('I',  1))
 
-def to_roman(n):
-    result = ""
-    for numeral, integer in roman_numeral_map:
+def to_roman(s):
+    roman_string = ''
+    n = int(eval(s))
+    wrong_value = 'Number is out of range'
+    if not 1 <= n <= 9999:
+        return wrong_value
+    for string, integer in roman_numeral_map:
         while n >= integer:
-            result += numeral
+            roman_string += string
             n -= integer
-    print result
+    print (roman_string)
 
-roman_numeral_pattern = '^M?M?M?(CM|CD|D?C?C?C?)(XC|XL|L?X?X?X?)(IX|IV|V?I?I?I?)$'
 
 def from_roman(s):
     result = 0
@@ -41,12 +41,19 @@ def from_roman(s):
         while s[index:index+len(numeral)] == numeral:
             result += integer
             index += len(numeral)
-    return result
+    print result
 
-t1=Label(root, text="Convert")
-t1.grid(row=0, column=0)
-e1 = Entry(root, bd = 10)
-e1.grid(row=0, column=1)
-converter_button = Button(root, text="Enter something", width=20, command=check_value)
-converter_button.grid(row=1, column=1)
+def check_value():
+    s = e1.get()
+    if isinstance(s, int):
+        to_roman(s)
+    else:
+        from_roman(s)
+
+convert_button = Button(root, text='Convert', command=check_value)
+e1 = Entry(root)
+e1.pack()
+e1.delete(0, END)
+e1.insert(0, 'Enter a Number')
+convert_button.pack()
 root.mainloop()
