@@ -4,35 +4,33 @@ root.title('Roman Numerals')
 root.geometry('400x300')
 
 
-roman_numeral_map = (('MCM', 1900),
-                   ('MD', 1500),
-                   ('MCD', 1400),
-                   ('M',  1000),
-                   ('CM', 900),
-                   ('D',  500),
-                   ('CD', 400),
-                   ('C',  100),
-                   ('XC', 90),
-                   ('L',  50),
-                   ('XL', 40),
-                   ('X',  10),
-                   ('IX', 9),
-                   ('V',  5),
-                   ('IV', 4),
-                   ('I',  1))
+roman_numeral_map = [['MCM', 1900],
+                   ['MD', 1500],
+                   ['MCD', 1400],
+                   ['M',  1000],
+                   ['CM', 900],
+                   ['D',  500],
+                   ['CD', 400],
+                   ['C',  100],
+                   ['XC', 90],
+                   ['L',  50],
+                   ['XL', 40],
+                   ['X',  10],
+                   ['IX', 9],
+                   ['V',  5],
+                   ['IV', 4],
+                   ['I',  1]]
 
-def to_roman(s):
-    roman_string = ''
-    n = int(eval(s))
-    wrong_value = 'Number is out of range'
-    if not 1 <= n <= 9999:
-        return wrong_value
-    for string, integer in roman_numeral_map:
-        while n >= integer:
-            roman_string += string
-            n -= integer
-    print (roman_string)
-
+def arabic_to_roman(number):
+    conv = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
+            [ 100, 'C'], [ 90, 'XC'], [ 50, 'L'], [ 40, 'XL'],
+            [  10, 'X'], [  9, 'IX'], [  5, 'V'], [  4, 'IV'],
+            [   1, 'I']]
+    result = ''
+    for denom, roman_digit in conv:
+        result += roman_digit*(number/denom)
+        number %= denom
+    print result
 
 def from_roman(s):
     result = 0
@@ -45,10 +43,14 @@ def from_roman(s):
 
 def check_value():
     s = e1.get()
-    if isinstance(s, int):
-        to_roman(s)
+    if s.isdigit():
+        s = int(s)
+        arabic_to_roman(s)
+
     else:
         from_roman(s)
+
+
 
 convert_button = Button(root, text='Convert', command=check_value)
 e1 = Entry(root)
